@@ -4,6 +4,7 @@ import os
 import csv
 import msvcrt
 
+file = ""
 
 
 def salir():
@@ -16,11 +17,42 @@ def salir():
     print(despedida)
 
 def cargar_archivo():
+    global file 
     root = tk.Tk()
     root.withdraw()
     file = arch.askopenfilename()
+
+
+def listas_ordenadas():
     open_file = open(file, 'r')
-    Organizer().file_reading(open_file)
+    lists_dictionary = Organizer().file_reading(open_file)
+    for key,v in lists_dictionary.items():
+        if v["ORDENAR"] == True:
+            data_list = v["data_list"].split(",")
+            for i in range(len(data_list)):
+                least = i
+                for k in range(i+1, len(data_list)):
+                    if int(data_list[k]) < int(data_list[least]):
+                        least = k
+
+                ordenar_temp = data_list[least]
+                data_list[least] = data_list[i]
+                data_list[i] = ordenar_temp
+
+            print(key + ": ORDENADOS=" + ",".join(data_list))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Organizer:
     def file_reading(self,document):
@@ -62,7 +94,7 @@ class Organizer:
             
             
             list_1[name_options] = options
-        print(list_1)            
+        return list_1            
 
 
 
@@ -92,6 +124,7 @@ while inicio !=2:
         cargar_archivo()
     if inicio == 2:
         print("Desplegar Listas")
+        listas_ordenadas()
     if inicio == 3:
         print("Desplegar Búsquedas")
     if inicio == 4:
