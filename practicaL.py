@@ -26,6 +26,7 @@ def cargar_archivo():
 def listas_ordenadas():
     open_file = open(file, 'r')
     lists_dictionary = Organizer().file_reading(open_file)
+    data = ""
     for key,v in lists_dictionary.items():
         if v["ORDENAR"] == True:
             data_list = v["data_list"].split(",")
@@ -39,11 +40,14 @@ def listas_ordenadas():
                 data_list[least] = data_list[i]
                 data_list[i] = ordenar_temp
 
-            print(key + ": ORDENADOS=" + ",".join(data_list))
+            data += key + ": ORDENADOS=" + ",".join(data_list) + "\n"
+    data = data[:-1]
+    return data
 
 def buscar_listas():
     open_file = open(file, 'r')
     lists_dictionary = Organizer().file_reading(open_file)
+    data2 = ""
     for key,v in lists_dictionary.items():
         if v["BUSCAR"] is not False:
             contador = 0
@@ -58,28 +62,10 @@ def buscar_listas():
             else:
                 a = "NO ENCONTRADO"
             listado = ",".join(data_list)
-            print(key+":"+listado+" BUSQUEDA POSICIONES = "+a)
+            data2 += key+":"+listado+" BUSQUEDA POSICIONES = "+a+ "\n"
+    data2 = data2[:-1]
+    return data2
                     
-
-
-
-
-    
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class Organizer:
@@ -152,12 +138,18 @@ while inicio !=2:
         cargar_archivo()
     if inicio == 2:
         print("Desplegar Listas")
-        listas_ordenadas()
+        lo = listas_ordenadas()
+        print(lo)
     if inicio == 3:
         print("Desplegar Búsquedas")
-        buscar_listas()
+        bu =buscar_listas()
+        print(bu)
     if inicio == 4:
         print("Desplegar todas")
+        print("Búsquedas -------------------------")
+        print(buscar_listas())
+        print("Ordenadas -------------------------")
+        print(listas_ordenadas())
     if inicio == 5:
         print("Desplegar todas a archivo")
     if inicio == 6:
