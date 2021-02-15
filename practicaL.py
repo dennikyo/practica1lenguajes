@@ -1,9 +1,10 @@
-from archivo import *
+import tkinter as tk
+from tkinter import filedialog as arch
 import os
 import csv
 import msvcrt
-cargar = []
-listado = []
+
+
 
 def salir():
     despedida = """
@@ -14,19 +15,59 @@ def salir():
     """
     print(despedida)
 
-def Cargar_Archivo():
-    global cargar
-    global listado
+def cargar_archivo():
+    root = tk.Tk()
+    root.withdraw()
+    file = arch.askopenfilename()
+    open_file = open(file, 'r')
+    Organizer().file_reading(open_file)
 
-    datos = input("Escriba el nombre del archivo que desea cargar: ")
-    archivo = open(datos, "r", encoding='UTF-8')
-    linea = archivo.readlines()
-    archivo.close()
-    for i in linea:
-        cargar = i.split("=")
-        cargar = cargar[1].split(",")
-        listado.append(Cargar_Archivos(name=cargar[0], num1=cargar[1], num2=cargar[2], num3=cargar[3], num4=cargar[4], num5=cargar[5], num6=cargar[6]))
+class Organizer:
+    def file_reading(self,document):
+        list_1 ={}
+        for espace in document:
+            options = {}
+            name_options = espace.split("=")[0]
+            better_list = espace.split("=")[1]
 
+            if "ORDENAR" in better_list:
+                options["ORDENAR"] = True
+
+                if "BUSCAR" not in better_list:
+                    options["BUSCAR"] = False
+                    left_list = better_list.split("ORDENAR")[0]
+                    options["data_list"] = "".join(left_list.split())
+                else:
+                    left_list = better_list.split("ORDENAR")[0]
+                    if "BUSCAR" in left_list:
+                        options["data_list"] = "".join(left_list.split("BUSCAR")[0].split())
+                        options["BUSCAR"] = "".join(left_list.split("BUSCAR")[1].split())
+                    else:
+                        right_list = better_list.split("ORDENAR")[1]
+                        options["data_list"] = "".join(left_list.split())
+                        options["BUSCAR"] = "".join(right_list.split("BUSCAR")[1].split())
+
+            else:
+                options["ORDENAR"] = False
+                if "BUSCAR" in better_list:
+                    left_list = better_list.split("BUSCAR")[0]
+                    right_list = better_list.split("BUSCAR")[1]
+                    options["data_list"] = "".join(left_list.split())
+                    options["BUSCAR"] = "".join(right_list.split())
+                
+            if options["BUSCAR"] != False:
+                if options["BUSCAR"][(len(options["BUSCAR"]))-1] == ",":
+                    options["BUSCAR"] = options["BUSCAR"][:-1]
+
+            
+            
+            list_1[name_options] = options
+        print(list_1)            
+
+
+
+
+                    
 
 
 def menu():
@@ -41,12 +82,14 @@ def menu():
     print(menu)
 
 
+
+
 inicio = 0
 while inicio !=2:
     menu()
     inicio = int(input("Ingrese una opción: "))
     if inicio == 1:
-        Cargar_Archivo()
+        cargar_archivo()
     if inicio == 2:
         print("Desplegar Listas")
     if inicio == 3:
