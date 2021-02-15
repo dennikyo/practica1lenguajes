@@ -41,6 +41,34 @@ def listas_ordenadas():
 
             print(key + ": ORDENADOS=" + ",".join(data_list))
 
+def buscar_listas():
+    open_file = open(file, 'r')
+    lists_dictionary = Organizer().file_reading(open_file)
+    for key,v in lists_dictionary.items():
+        if v["BUSCAR"] is not False:
+            contador = 0
+            a = ""
+            data_list = v["data_list"].split(",")
+            for n in data_list:
+                if v["BUSCAR"] == n:
+                    a += str(contador) + ","
+                contador +=1
+            if a != "":
+                a = a[:-1]
+            else:
+                a = "NO ENCONTRADO"
+            listado = ",".join(data_list)
+            print(key+":"+listado+" BUSQUEDA POSICIONES = "+a)
+                    
+
+
+
+
+    
+
+
+    
+
 
 
 
@@ -127,6 +155,7 @@ while inicio !=2:
         listas_ordenadas()
     if inicio == 3:
         print("Desplegar Búsquedas")
+        buscar_listas()
     if inicio == 4:
         print("Desplegar todas")
     if inicio == 5:
