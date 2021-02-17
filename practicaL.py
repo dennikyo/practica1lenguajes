@@ -139,7 +139,7 @@ def html_file():
         <body>
         <ul class="miau">"""
     message += fixi 
-    message += """>/ul>
+    message += """</ul>
     
         <p></p>
 
