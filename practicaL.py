@@ -135,7 +135,7 @@ def html_file():
     h1   {color: rgb(106, 158, 236);}
     p    {color: rgb(153, 0, 255);}
     </style>
-        </head><h1></h1>
+        </head><h1>INFORMACIÓN DE ARCHIVO TXT PROCESADA: ORDENAMIENTO Y BÚSQUEDA DE DATA</h1>
         <body>
         <ul class="miau">"""
     message += fixi 
