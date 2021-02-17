@@ -3,6 +3,7 @@ from tkinter import filedialog as arch
 import os
 import csv
 import msvcrt
+import webbrowser
 
 file = ""
 
@@ -108,12 +109,49 @@ class Organizer:
             
             
             list_1[name_options] = options
-        return list_1            
+        return list_1        
 
 
+def found():
+    ordenadas = listas_ordenadas()
+    buscadas = buscar_listas()
+    return ordenadas + "\n" + buscadas
+    
 
+def html_file():
+    complete = found()
+    print(complete)
+    fixi = ""
+    for g in found().split("\n"):
+        fixi += '<li class="gato">' + g + '</li>\n'
+    
+    f = open('archivo.html', 'w')
+    message = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <style>
+    body {background-color: powderblue;}
+    h1   {color: rgb(106, 158, 236);}
+    p    {color: rgb(153, 0, 255);}
+    </style>
+        </head><h1></h1>
+        <body>
+        <ul class="miau">"""
+    message += fixi 
+    message += """>/ul>
+    
+        <p></p>
 
-                    
+    </body>
+    </html>
+    """
+
+    f.write(message)
+    f.close()
+    webbrowser.open_new_tab('archivo.html') 
+    return complete
+               
 
 
 def menu():
@@ -152,6 +190,9 @@ while inicio !=2:
         print(listas_ordenadas())
     if inicio == 5:
         print("Desplegar todas a archivo")
+        go = html_file()
+        print(go)
+       
     if inicio == 6:
         salir()
         quit()
